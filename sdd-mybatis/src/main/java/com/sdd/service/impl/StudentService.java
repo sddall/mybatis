@@ -1,5 +1,7 @@
 package com.sdd.service.impl;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -42,8 +44,16 @@ public class StudentService implements IStudentService {
 
 	@Override
 	public Student selectOneById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		SqlSession ss=ssf.openSession();
+		Student stu=ss.selectOne("com.sdd.mapper.IStudentMapper.selectStudentById",id);
+		return stu;
 	}
 
+	@Override
+	public List<Student> selectStudent(Student stu) {
+		SqlSession ss=ssf.openSession();
+		return ss.selectList("com.sdd.mapper.IStudentMapper.selectStudent",stu);
+		
+	}
+	
 }

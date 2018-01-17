@@ -1,5 +1,7 @@
 package com.sdd.test;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import com.sdd.pojo.po.Student;
@@ -15,12 +17,24 @@ public class FirstTest {
 
 	@Test
 	public void addStudentTest() {
-		Student stu=new Student(4,"ËïËÄ","123",15,"male",2);
+		Student stu=new Student();
+		stu.setName("ÎâÁù");
+		stu.setPassword("123456");
 		iss.addStudent(stu);
+		System.out.println(stu.getId());
 	}
 	@Test
 	public void removeStudentTest(){
 		iss.removeStudentById(4);
 	}
-
+	@Test
+	public void selectStudentById(){
+		Student stu=iss.selectOneById(3);
+	}
+	@Test
+	public void selectStudent(){
+		Student stu=new Student();
+		stu.setCid(2);
+		List<Student> list=iss.selectStudent(stu);
+	}
 }

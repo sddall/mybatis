@@ -48,7 +48,7 @@ public class Student {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Student(Integer id, String name, String password, Integer age, String gender, Integer cid) {
+	/*public Student(Integer id, String name, String password, Integer age, String gender, Integer cid) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -56,7 +56,7 @@ public class Student {
 		this.age = age;
 		this.gender = gender;
 		this.cid = cid;
-	}
+	}*/
 	
 	
 }

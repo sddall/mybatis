@@ -2,21 +2,42 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
+
 
 <mapper namespace="com.sdd.mapper.IStudentMapper">
-	<select id="selectStudentById" parameterType="int" resultType="com.sdd.pojo.po.Student">
-		select * from student where id=#{id}
+	<select id="selectStudentById" parameterType="int"
+		resultType="com.sdd.pojo.po.Student">
+		select * from student
+		<where>
+			and id=#{id}
+		</where>
+
+	</select>
+	<select id="selectStudent" parameterType="com.sdd.pojo.po.Student" resultType="com.sdd.pojo.po.Student">
+		select * from student
+		<where>
+			<if test="id!=null and id!=''">and id=#{id}</if>
+			<if test="name!=null and name!=''">and name=#{name}</if>
+			<if test="age!=null and age!=''">and age=#{age}</if>
+			<if test="gender!=null and gender!=''">and gender=#{gender}</if>
+			<if test="cid!=null and cid!=''">and cid=#{cid}</if>
+		</where>
 	</select>
 	<insert id="addStudent" parameterType="com.sdd.pojo.po.Student">
-		insert into student (id,name,password,age,gender,cid) 
-		values (#{id},#{name},#{password},#{age},#{gender},#{cid})
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select
+			last_insert_id() as id
+		</selectKey>
+		insert into student (name,password,age,gender,cid)
+		values (#{name},#{password},#{age},#{gender},#{cid})
 	</insert>
 	<delete id="removeStudentById" parameterType="int">
-		delete from student where id=#{id}
+		delete from student
+		where id=#{id}
 	</delete>
 	<update id="updateStudentById" parameterType="int">
-		update student set name=#{name},password=#{password},age=#{age},gender=#{gender},cid=#{gender}
-		 where id=#{id}
+		update student set
+		name=#{name},password=#{password},age=#{age},gender=#{gender},cid=#{gender}
+		where id=#{id}
 	</update>
 </mapper>
