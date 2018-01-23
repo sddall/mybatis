@@ -49,7 +49,7 @@ public class UserAction {
 	}
 	@RequestMapping(value="/loginOut")
 	public String loginOut() {
-		return "tologin";
+		return "login";
 	}
 	@RequestMapping(value="/forward")
 	public String selfInfo(){

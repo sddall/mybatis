@@ -37,7 +37,6 @@
 	</div>
 <form id="sendMail" enctype="multipart/form-data" name="sendMail">
 	<div class="main">
-		<input type="hidden" name="writer" value="${sessionUser.username }" />
 			<div class="global-width">
 				<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 				<html xmlns="http://www.w3.org/1999/xhtml">
@@ -97,49 +96,26 @@
 </html>
 
 				<div class="action">
-					<div class="t">写邮件</div>
+					<div class="t">收件箱</div>
 					<div class="pages">
 						<table width="90%" border="0" cellspacing="0" cellpadding="0"
-							id="writerMail">
+							id="receiveMail">
+						<tr>
+							<td>标题</td>
+							<td>内容</td>
+							<td>是否已读</td>
+							<td>时间</td>
+							<td>操作</td>
+						</tr>
+						<c:forEach items="${mails}" var="m">
 							<tr>
-								<td align="right" width="30%">收件人</td>
-								<td align="left">
-									<select name="receiver">
-										<option value="please">请选择收件人</option>
-										<c:forEach  items="${menberList }" var="ml">
-											<option value="${ml.id }">${ml.username }</option>
-										</c:forEach>
-									</select>
-								</td>
+								<td><a href="mailInfo.action?eid=${m.eid}" target="_self">${m.title }</a></td>
+								<td>${m.contextArea }</td>
+								<td>${m.isread==0?'未读':'已读' }</td>
+								<td>${m.sendTime }</td>
+								<td><input type="button" value="删除" onclick="deleteMail()"/></td>
 							</tr>
-							<tr>
-								<td align="right" width="30%">邮件标题</td>
-								<td align="left">
-									<input type="text" name="title" id="title"/>
-								</td>
-							</tr>
-							<tr>
-								<td align="right" width="30%">邮件内容</td>
-								<td align="left">
-									<textarea cols="36px" rows="5px" name="contextArea" id="contextArea"></textarea>
-								</td>
-							</tr>
-							<tr>
-								<td align="right" width="30%">附件</td>
-								<td align="left">
-									<input type="file" name="otherFile" id="otherFile"/>
-								</td>
-							</tr>
-							<tr>
-								<td align="center">
-									<input type="submit" id="sendMail" value="确认发送" />
-								</td>
-								<td align="center" >
-									<td align="center" colspan="2">
-									<input type="reset" style="display:none;" />
-									</td>
-								</td>
-							</tr>
+						</c:forEach>	
 						</table>
 					</div>
 				</div>
@@ -147,51 +123,5 @@
 		</div>		
 	</form>
 	<div class="copyright">Copyright &nbsp; &copy; &nbsp;</div>
-<script type="text/javascript">
-$(function() {
-	jQuery.validator.addMethod("checkSize",function(value,element){
-		 var fileSize=element.files[0].size;
-		    var maxSize = 9*1024*1024;
-		    if(fileSize > maxSize){
-		        return false;
-		    }else{
-		        return true;
-		    }
-	}),
-	$("#sendMail").validate({
-						rules : {
-							title : "required",
-							otherFile:{
-								checkSize:true
-							} 
-						},
-						messages : {
-							title : "标题不能为空",
-							otherFile:"附件大小不能大于9M"
-						},
-						submitHandler : function() {
-							//提交Ajax
-							 $.ajax({
-								 		
-								 		data:new FormData($('#sendMail')[0]),
-										dataType : "text",
-										processData : false, 
-										contentType : false,
-										type : "post",
-										url : "${pageContext.request.contextPath}/user/sendMail.do",
-										success : function(rec) {
-											if(rec==0){	
-												alert("发送成功"),
-											$("input[type=reset]").trigger("click");
-											}else{
-												alert("发送失败")
-											}
-										}
-									}); 
-						} 
-					});
-})
-
-</script>
 </body>
 </html>

@@ -5,33 +5,48 @@
   
 <mapper namespace="com.sdd.mapper.IMailMapper">
 	<insert id="saveMail" parameterType="com.sdd.pojo.po.Mail">
+	<selectKey keyProperty="eid" resultType="int" order="AFTER">
+		select last_insert_id() as eid
+	</selectKey>
     insert into mailservice
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="membername != null">
-        membername,
+      <if test="receiver != null">
+        receiver,
       </if>
       <if test="title != null">
         title,
       </if>
-      <if test="otherfile != null">
-        otherFile,
+      <if test="filePath != null">
+        filePath,
       </if>
-      <if test="contextarea != null">
+      <if test="contextArea != null">
         contextArea,
+      </if>
+      <if test="writer !=null">
+      	writer,
+      </if>
+      <if test="sendTime !=null">
+      	sendTime,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="membername != null">
-        #{membername,jdbcType=VARCHAR},
+      <if test="receiver != null">
+        #{receiver},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="otherfile != null">
-        #{otherfile,jdbcType=VARCHAR},
+      <if test="filePath != null">
+        #{filePath},
       </if>
-      <if test="contextarea != null">
-        #{contextarea,jdbcType=LONGVARCHAR},
+      <if test="contextArea != null">
+        #{contextArea},
+      </if>
+      <if test="writer != null">
+        #{writer},
+      </if>
+      <if test="sendTime != null">
+        #{sendTime},
       </if>
     </trim>
   </insert>
