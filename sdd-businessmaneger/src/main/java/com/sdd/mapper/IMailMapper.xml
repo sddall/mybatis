@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.sdd.mapper.IMailMapper">
+	<insert id="saveMail" parameterType="com.sdd.pojo.po.Mail">
+    insert into mailservice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="membername != null">
+        membername,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="otherfile != null">
+        otherFile,
+      </if>
+      <if test="contextarea != null">
+        contextArea,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="membername != null">
+        #{membername,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="otherfile != null">
+        #{otherfile,jdbcType=VARCHAR},
+      </if>
+      <if test="contextarea != null">
+        #{contextarea,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+	
+</mapper>

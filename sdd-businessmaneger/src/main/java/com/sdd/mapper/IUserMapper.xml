@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.sdd.mapper.IUserMapper">
+	<select id="findUserById" parameterType="com.sdd.pojo.po.User"
+		resultType="com.sdd.pojo.po.User">
+		select * from bm
+		<where>
+			and id=#{id}
+		</where>
+	</select>
+	<select id="findAll" resultType="com.sdd.pojo.po.User" >
+		select * from bm
+	</select>
+	<update id="saveUser" parameterType="com.sdd.pojo.po.User">
+		update bm
+		<set>
+			<if test="username !=null and  username !=''">
+                        username=#{username},
+            </if>
+            <if test="password !=null and  password !=''">
+                        password=#{password},
+            </if>
+            <if test="age !=null and  age !=''">
+                        age=#{age},
+            </if>
+            <if test="address !=null and  address !=''">
+                        address=#{address},
+            </if>
+            <if test="phone !=null and  phone !=''">
+                        phone=#{phone},
+            </if>
+            <if test="gender !=null and gender !=''">gender=#{gender}, </if>
+            <if test="isadmin !=null and isadmin !=''">isadmin=#{isadmin}, </if>
+		</set>
+		<where>and id=#{id}</where>
+	</update>
+</mapper>

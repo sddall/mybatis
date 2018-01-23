@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<!--数据库驱动 -->
+	<classPathEntry location="F:\apache-maven-3.3.9\repo\mysql\mysql-connector-java\5.1.40\mysql-connector-java-5.1.40.jar" />
+
+	<context id="mysqlCxt" targetRuntime="MyBatis3">
+		<!--数据库连接信息 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/bm" userId="root"
+			password="s961231">
+		</jdbcConnection>
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!--model类 -->
+		<javaModelGenerator targetPackage="com.sdd.pojo.po"
+			targetProject="sdd-businessmaneger">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<!--Mapper文件 -->
+		<sqlMapGenerator targetPackage="com.sdd.mapper"
+			targetProject="sdd-businessmaneger">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator> 
+		<!--mapper接口 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.sdd.mapper" targetProject="sdd-businessmaneger">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		<!--依赖的表，%表示所有表 -->
+		<table tableName="%">
+			<!-- <columnOverride column="UNSIGNED_BIGINT_FIELD"
+				javaType="java.lang.Object" jdbcType="LONG" /> -->
+		</table>
+
+	</context>
+</generatorConfiguration>
