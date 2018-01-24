@@ -112,7 +112,7 @@
 				<a href="mailWrite.action" target="_self">写邮件</a>
 			</dd>
 			<dd>
-				<a href="mailReceive.action" target="_self">收邮件</a>
+				<a href="mailReceive.action?receiver=${sessionUser.id }" target="_self">收邮件</a>
 			</dd>
 			<dd>
 				<a href="mailGarage.action" target="_self">垃圾邮件</a>

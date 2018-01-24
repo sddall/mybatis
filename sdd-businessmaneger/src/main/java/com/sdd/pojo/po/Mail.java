@@ -1,11 +1,11 @@
 package com.sdd.pojo.po;
 
-import java.io.File;
-
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+@Component
 public class Mail {
-	private String receiver;
+	private Integer receiver;
 	private String title;
 	private String contextArea;
 	private Integer eid;
@@ -13,21 +13,22 @@ public class Mail {
 	private String filePath;
 	private String sendTime;
 	private String writer;
-	private String isread;
-	public String getReceiver() {
+	private Integer isread;
+	private Integer isdelete;
+	public Integer getReceiver() {
 		return receiver;
 	}
 
-	public void setReceiver(String receiver) {
+	public void setReceiver(Integer receiver) {
 		this.receiver = receiver;
 	}
 
-	public String getIsread() {
+	public Integer getIsread() {
 		return isread;
 	}
 
-	public void setIsread(String isread) {
-		this.isread = isread;
+	public void setIsread(Integer i) {
+		this.isread = i;
 	}
 
 	public String getTitle() {
@@ -88,6 +89,15 @@ public class Mail {
 
 	public void setWriter(String writer) {
 		this.writer = writer;
+	}
+	
+
+	public Integer getIsdelete() {
+		return isdelete;
+	}
+
+	public void setIsdelete(Integer isdelete) {
+		this.isdelete = isdelete;
 	}
 
 	public Mail() {

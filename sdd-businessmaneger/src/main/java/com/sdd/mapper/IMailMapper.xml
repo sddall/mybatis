@@ -2,53 +2,96 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
 <mapper namespace="com.sdd.mapper.IMailMapper">
 	<insert id="saveMail" parameterType="com.sdd.pojo.po.Mail">
-	<selectKey keyProperty="eid" resultType="int" order="AFTER">
-		select last_insert_id() as eid
-	</selectKey>
-    insert into mailservice
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="receiver != null">
-        receiver,
-      </if>
-      <if test="title != null">
-        title,
-      </if>
-      <if test="filePath != null">
-        filePath,
-      </if>
-      <if test="contextArea != null">
-        contextArea,
-      </if>
-      <if test="writer !=null">
-      	writer,
-      </if>
-      <if test="sendTime !=null">
-      	sendTime,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="receiver != null">
-        #{receiver},
-      </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="filePath != null">
-        #{filePath},
-      </if>
-      <if test="contextArea != null">
-        #{contextArea},
-      </if>
-      <if test="writer != null">
-        #{writer},
-      </if>
-      <if test="sendTime != null">
-        #{sendTime},
-      </if>
-    </trim>
-  </insert>
-	
+		<selectKey keyProperty="eid" resultType="int" order="AFTER">
+			select last_insert_id() as eid
+		</selectKey>
+		insert into mailservice
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="receiver != null">
+				receiver,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="filePath != null">
+				filePath,
+			</if>
+			<if test="contextArea != null">
+				contextArea,
+			</if>
+			<if test="writer !=null">
+				writer,
+			</if>
+			<if test="sendTime !=null">
+				sendTime,
+			</if>
+			<if test="isread !=null">
+				isread,
+			</if>
+			<if test="isdelete !=null">
+				isdelete,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="receiver != null">
+				#{receiver},
+			</if>
+			<if test="title != null">
+				#{title},
+			</if>
+			<if test="filePath != null">
+				#{filePath},
+			</if>
+			<if test="contextArea != null">
+				#{contextArea},
+			</if>
+			<if test="writer != null">
+				#{writer},
+			</if>
+			<if test="sendTime != null">
+				#{sendTime},
+			</if>
+			<if test="isread != null">
+				#{isread},
+			</if>
+			<if test="isdelete != null">
+				#{isdelete},
+			</if>
+		</trim>
+	</insert>
+	<select id="findAllMail" parameterType="com.sdd.pojo.po.Mail" resultType="com.sdd.pojo.po.Mail">
+		select * from mailservice
+		<where>
+			<if test="receiver!=null">
+				and receiver=#{receiver}
+			</if>
+			<if test="isdelete!=null">
+				and isdelete=#{isdelete}
+			</if>
+		</where> 
+	</select>
+	<update id="updateReadInfo" parameterType="int">
+		update mailservice set isread=1 where eid=#{eid}
+	</update>
+	<select id="findReadMail" parameterType="int" resultType="com.sdd.pojo.po.Mail">
+		select * from mailservice where eid=#{eid}
+	</select>
+	<update id="updateEmail" parameterType="com.sdd.pojo.po.Mail">
+		update mailservice set
+		<trim suffixOverrides=",">
+		
+			<if test="isread !=null">
+				isread=#{isread},
+			</if>
+			<if test="isdelete !=null">
+				isdelete=#{isdelete},
+			</if>
+		</trim>
+		<where>
+			eid=#{eid}
+		</where>
+	</update>
 </mapper>

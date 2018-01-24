@@ -66,7 +66,7 @@
 				<a href="mailWrite.action" target="_self">写邮件</a>
 			</dd>
 			<dd>
-				<a href="mailReceive.action" target="_self">收邮件</a>
+				<a href="mailReceive.action?receiver=${sessionUser.id }" target="_self">收邮件</a>
 			</dd>
 			<dd>
 				<a href="mailGarage.action" target="_self">垃圾邮件</a>
@@ -108,12 +108,12 @@
 							<td>操作</td>
 						</tr>
 						<c:forEach items="${mails}" var="m">
-							<tr>
-								<td><a href="mailInfo.action?eid=${m.eid}" target="_self">${m.title }</a></td>
+							<tr id="${m.eid}_tr">
+								<td><a href="mailInfo.action?eid=${m.eid}&receiver=${sessionUser.id}" target="_self">${m.title }</a></td>
 								<td>${m.contextArea }</td>
 								<td>${m.isread==0?'未读':'已读' }</td>
 								<td>${m.sendTime }</td>
-								<td><input type="button" value="删除" onclick="deleteMail()"/></td>
+								<td><input type="button" value="删除" onclick="mailDelete(${m.eid})"/></td>
 							</tr>
 						</c:forEach>	
 						</table>
@@ -123,5 +123,24 @@
 		</div>		
 	</form>
 	<div class="copyright">Copyright &nbsp; &copy; &nbsp;</div>
+	<script type="text/javascript">
+	function mailDelete(eid){
+		var trID=document.getElementById(eid+"_tr");
+		var conf = confirm("确定要删除吗？");
+		if(conf){
+			$.ajax({
+				data : {"eid":eid},
+				dataType : "text",
+				type : "post",
+				url : "${pageContext.request.contextPath}/user/mailDelete.do",
+				success : function(rec) {
+					if (rec=="0") {
+						$(trID).remove();
+					}
+				}
+			});
+		}
+	}
+	</script>
 </body>
 </html>

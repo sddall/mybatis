@@ -32,18 +32,12 @@
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-				href="#" onclick="location.href='loginOut.action'";>注销</a>
+				href="loginOut.action">注销</a>
 		</div>
 	</div>
-	<form id="myForm" name="myForm" action="userInfo!editData.action"
-		method="post">
-		<input type="hidden" name="id" value="${sessionUser.id }" /> <input
-			type="hidden" name="isadmin" value="${sessionUser.isadmin }"
-			id="isadmin" />
-		<div class="main">
+<form id="sendMail" enctype="multipart/form-data" name="sendMail">
+	<div class="main">
 			<div class="global-width">
-
-
 				<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 				<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -102,49 +96,19 @@
 </html>
 
 				<div class="action">
-					<div class="t">个人信息</div>
+					<div class="t">收件箱</div>
 					<div class="pages">
 						<table width="90%" border="0" cellspacing="0" cellpadding="0"
-							id="editor">
+							id="receiveMail">
 							<tr>
-								<td align="right" width="30%">昵称：</td>
-								<td align="left"><input type="text" name="username"
-									value="${sessionUser.username }" id="username" readonly="readonly"/></td>
-							</tr>
-							<tr>
-								<td align="right" width="30%">年龄：</td>
-								<td align="left"><input type="text" name="age"
-									value="${sessionUser.age}" id="age" readonly="readonly"/></td>
-							</tr>
-							<tr>
-								<td align="right" width="30%">性别：</td>
-								<td align="left">
-								<input type="text" name="gender"
-									value="${1 eq sessionUser.gender?'男':'女'}" id="gender" readonly="readonly"/>
-									<%-- <select id="gender" >
-										<option value="1" <c:if test="${'1' eq sessionUser.gender }">selected</c:if>>男</option>
-										<option value="0" <c:if test="${'0' eq sessionUser.gender }">selected</c:if>>女</option>
-									</select> --%>
-								</td>
-							</tr>
-							<tr>
-								<td align="right" width="30%">手机：</td>
-								<td align="left"><input type="text" name="phone"
-									value="${sessionUser.phone }" id="phone" readonly="readonly"/></td>
-							</tr>
-							<tr>
-								<td align="right" width="30%">地址：</td>
-								<td align="left"><input type="text" name="address"
-									value="${sessionUser.address }" id="address" readonly="readonly"/></td>
+								<td>您没有收到任何邮件</td>
 							</tr>
 						</table>
-
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>		
 	</form>
 	<div class="copyright">Copyright &nbsp; &copy; &nbsp;</div>
-
 </body>
 </html>
