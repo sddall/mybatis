@@ -59,7 +59,7 @@ public class UserAction {
 	@ResponseBody
 	public String editor(User user,HttpSession session){
 		if(user!=null ){
-			us.saveUser(user);
+			us.updateUser(user);
 			session.setAttribute("sessionUser",user);
 			return "0";
 		}
@@ -75,5 +75,40 @@ public class UserAction {
 		session.setAttribute("menberList",us.findAll());
 		return "mailWrite";
 	}
-	
+	@RequestMapping(value="/singleAccountData")
+	public String singleData(){
+		return "singleAccount";
+	}
+	@RequestMapping(value="/singleAcount")
+	@ResponseBody
+	public String singleAcount(User user,HttpSession session){
+		us.updateUser(user);
+		User user2=us.findUserById(user);
+		session.setAttribute("sessionUser",user2);
+		return "0";
+	}
+	@RequestMapping(value="/allAccountData")
+	public String allAccount(HttpSession session){
+		User user=(User) session.getAttribute("sessionUser");
+		int isadmin=user.getIsadmin();
+		if(isadmin==0){
+			return "notadmin";
+		}else if(isadmin==1){
+			session.setAttribute("memberList", us.findAll());
+			return "accountManage";
+		}else{
+			return "login";
+		}
+	}
+	@RequestMapping(value="toAddAccount")
+	public String toAddAccount(){
+		return "addAccount";
+	}
+	@RequestMapping(value="/addAccount")	
+	public String addAccount(User user){
+		user.setIsadmin(0);
+		us.insertUser(user);
+		return "forward:/user/allAccountData";
+		
+	}
 }

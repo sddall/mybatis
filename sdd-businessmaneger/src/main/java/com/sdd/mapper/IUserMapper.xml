@@ -17,7 +17,7 @@
 	<select id="findAll" resultType="com.sdd.pojo.po.User" >
 		select * from bm
 	</select>
-	<update id="saveUser" parameterType="com.sdd.pojo.po.User">
+	<update id="updateUser" parameterType="com.sdd.pojo.po.User">
 		update bm
 		<set>
 			<if test="username !=null and  username !=''">
@@ -40,4 +40,10 @@
 		</set>
 		<where>and id=#{id}</where>
 	</update>
+	<insert id="insertUser" parameterType="com.sdd.pojo.po.User" >
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select last_insert_id() as id
+		</selectKey>
+		insert into bm (username,password,gender,age,phone,address,isadmin) values (#{username},#{password},#{gender},#{age},#{phone},#{address},#{isadmin})
+	</insert>
 </mapper>

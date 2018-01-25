@@ -25,20 +25,30 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void saveUser(User user) {
-		ium.saveUser(user);
+	@Transactional
+	public void updateUser(User user) {
+		ium.updateUser(user);
 		
 	}
 
 	@Override
+	@Transactional
 	public List<User> findAll() {
 		return ium.findAll();
 		
 	}
 
 	@Override
+	@Transactional
 	public List<User> findAdmin() {
 		return ium.findAdmin();
+	}
+
+	@Override
+	@Transactional
+	public int insertUser(User user) {
+		ium.insertUser(user);
+		return 0;
 	}
 
 }

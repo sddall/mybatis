@@ -16,53 +16,7 @@
 	src="${pageContext.request.contextPath}/js/messages_zh.js"></script>
 
 </head>
-<script>
-	$().ready(function() {
-		$("#myForm").validate({
-		rules : {
-			username : "required",
-			phone :{
-				required:true,
-				number:true,
-				rangelength:[11,11]
-			}
-	
-		},
-		messages : {
-			username : "昵称不能为空",
-			phone : "电话号码格式不正确",
-		}
-		})
-	})
-	function setit(){
-				$.ajax({
-					data : $("#myForm").serialize(),
-					dataType : "text",
-					type : "post",
-					url : "${pageContext.request.contextPath}/user/edit.do",
-					complete: function(){
-						$(":text").attr("readonly","readonly");
-						$(":button").attr("value","编辑信息");
-						$(":button").attr("onclick","editUser()")
-						
-					},
-					success : function(rec) {
-						if (rec=="0") {
-							alert("修改成功");
-							$("#nickName").html($("#username").val()+"你好！欢迎访问办公管理系统！");
-						} else {
-							location.href = "${pageContext.request.contextPath}/user/toEdit.do"
-						}
-					}
-				});
-	}
 
-	function editUser(){
-		$(":text").removeAttr("readonly");
-		$(":button").attr("onclick","setit()");
-		$(":button").attr("value","提交");
-	}
-</script>
 <body>
 	<div class="top">
 		<div class="global-width">
@@ -94,7 +48,6 @@
 <link href="${pageContext.request.contextPath}/css/style.css"
 	rel="stylesheet" type="text/css" />
 </head>
-
 <body>
 	<div class="nav" id="nav">
 		<div class="t"></div>
@@ -147,46 +100,29 @@
 				</html>
 
 				<div class="action">
-					<div class="t">个人信息</div>
+					<div class="t">管理账户</div>
 					<div class="pages">
 						<table width="90%" border="0" cellspacing="0" cellpadding="0"
 							id="editor">
 							<tr>
-								<td align="right" width="30%">昵称：</td>
-								<td align="left"><input type="text" name="username"
-									value="${sessionUser.username }" id="username" readonly="readonly"/></td>
+								<td>工号</td>
+								<td>昵称</td>
+								<td>手机</td>
+								<td>地址</td>
 							</tr>
+							<c:forEach items="${memberList }" var="ml">
+								<tr>
+									<td>${ml.id }</td>
+									<td>${ml.username }</td>
+									<td>${ml.phone }</td>
+									<td>${ml.address }</td>
+								</tr>
+							</c:forEach>
 							<tr>
-								<td align="right" width="30%">年龄：</td>
-								<td align="left"><input type="text" name="age"
-									value="${sessionUser.age}" id="age" readonly="readonly"/></td>
+								<td align="left" > <input type="button"
+									id="add" value="添加成员" onclick="location.href='toAddAccount.action'" /></td>
 							</tr>
-							<tr>
-								<td align="right" width="30%">性别：</td>
-								<td align="left" id="gender"><select name="gender">
-										<option value="1"
-											<c:if test="${'1' eq sessionUser.gender }">selected</c:if>>男</option>
-										<option value="0"
-											<c:if test="${'0' eq sessionUser.gender }">selected</c:if>>女</option>
-								</select></td>
-							</tr>
-							<tr>
-								<td align="right" width="30%">手机：</td>
-								<td align="left"><input type="text" name="phone"
-									value="${sessionUser.phone }" id="phone" readonly="readonly"/></td>
-							</tr>
-							<tr>
-								<td align="right" width="30%">地址：</td>
-								<td align="left"><input type="text" name="address"
-									value="${sessionUser.address }" id="address" readonly="readonly"/></td>
-							</tr>
-							<tr>
-								<td align="center" colspan="2"><br /> <input type="button"
-									id="edit" value="编辑信息" onclick="editUser()" /></td>
-							</tr>
-
 						</table>
-
 					</div>
 				</div>
 			</div>
