@@ -99,7 +99,7 @@
 </html>
 
 				<div class="action">
-					<div class="t">收件箱</div>
+					<div class="t">垃圾箱</div>
 					<div class="pages">
 						<table width="90%" border="0" cellspacing="0" cellpadding="0"
 							id="receiveMail">
@@ -108,15 +108,18 @@
 							<td>内容</td>
 							<td>是否已读</td>
 							<td>时间</td>
-							<td>操作</td>
+							<td colspan="2">操作</td>
 						</tr>
-						<c:forEach items="${mails}" var="m">
-							<tr id="${m.eid}_tr">
-								<td><a href="mailInfo.action?eid=${m.eid}&receiver=${sessionUser.id}" target="_self">${m.title }</a></td>
-								<td>${m.contextArea }</td>
-								<td>${m.isread==0?'未读':'已读' }</td>
-								<td>${m.sendTime }</td>
-								<td><input type="button" value="删除" onclick="mailDelete(${m.eid})"/></td>
+						<c:forEach items="${garage}" var="g">
+							<tr id="${g.eid}_tr">
+								<td><a href="mailInfo.action?eid=${g.eid}&receiver=${sessionUser.id}" target="_self">${g.title }</a></td>
+								<td>${g.contextArea }</td>
+								<td>${g.isread==0?'未读':'已读' }</td>
+								<td>${g.sendTime }</td>
+								<td>
+									<input style="border: 0px;" type="button" value="还原" onclick="mailRestore(${g.eid})"/>
+									<input style="border: 0px;" type="button" value="删除" onclick="comDelete(${g.eid})"/>
+								</td>
 							</tr>
 						</c:forEach>	
 						</table>
@@ -127,15 +130,32 @@
 	</form>
 	<div class="copyright">Copyright &nbsp; &copy; &nbsp;</div>
 	<script type="text/javascript">
-	function mailDelete(eid){
+	function mailRestore(eid){
 		var trID=document.getElementById(eid+"_tr");
-		var conf = confirm("确定要删除吗？");
+		var conf = confirm("确定还原吗？");
 		if(conf){
 			$.ajax({
 				data : {"eid":eid},
 				dataType : "text",
 				type : "post",
-				url : "${pageContext.request.contextPath}/user/mailDelete.do",
+				url : "${pageContext.request.contextPath}/user/mailRestore.do",
+				success : function(rec) {
+					if (rec=="0") {
+						$(trID).remove();
+					}
+				}
+			});
+		}
+	}
+	function comDelete(eid){
+		var trID=document.getElementById(eid+"_tr");
+		var conf = confirm("确定删除吗？");
+		if(conf){
+			$.ajax({
+				data : {"eid":eid},
+				dataType : "text",
+				type : "post",
+				url : "${pageContext.request.contextPath}/user/comDelete.do",
 				success : function(rec) {
 					if (rec=="0") {
 						$(trID).remove();

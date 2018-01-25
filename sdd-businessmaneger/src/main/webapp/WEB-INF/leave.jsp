@@ -35,7 +35,7 @@
 				href="loginOut.action">注销</a>
 		</div>
 	</div>
-<form id="sendMail" enctype="multipart/form-data" name="sendMail">
+<form id="leaveForm" name="leaveForm">
 	<div class="main">
 			<div class="global-width">
 				<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -99,26 +99,32 @@
 </html>
 
 				<div class="action">
-					<div class="t">收件箱</div>
+					<div class="t">邮件信息</div>
 					<div class="pages">
 						<table width="90%" border="0" cellspacing="0" cellpadding="0"
-							id="receiveMail">
+							id="leaveInfo">
 						<tr>
-							<td>标题</td>
-							<td>内容</td>
-							<td>是否已读</td>
-							<td>时间</td>
-							<td>操作</td>
+							<td>申请人</td>
+							<td>开始时间</td>
+							<td>结束时间</td>
+							<td>天数</td>
+							<td>审批状态</td>
+							<td>原因</td>
 						</tr>
-						<c:forEach items="${mails}" var="m">
-							<tr id="${m.eid}_tr">
-								<td><a href="mailInfo.action?eid=${m.eid}&receiver=${sessionUser.id}" target="_self">${m.title }</a></td>
-								<td>${m.contextArea }</td>
-								<td>${m.isread==0?'未读':'已读' }</td>
-								<td>${m.sendTime }</td>
-								<td><input type="button" value="删除" onclick="mailDelete(${m.eid})"/></td>
+						<c:forEach items="${selfLeave }" var="sl">
+							<tr>
+								<td>${sl.membername }</td>
+								<td>${sl.beginTime }</td>
+								<td>${sl.endTime }</td>
+								<td>${sl.day }</td>
+								<td>${sl.approval==0?"未审批":(sl.approval==1?"通过":"未通过") }</td>
+								<td>${sl.reason }</td>
 							</tr>
 						</c:forEach>	
+						<tr>
+							<td><input type="button" value="申请休假" onclick="location.href='leaveEdit.action'"/></td>
+						</tr>
+						
 						</table>
 					</div>
 				</div>
@@ -126,24 +132,5 @@
 		</div>		
 	</form>
 	<div class="copyright">Copyright &nbsp; &copy; &nbsp;</div>
-	<script type="text/javascript">
-	function mailDelete(eid){
-		var trID=document.getElementById(eid+"_tr");
-		var conf = confirm("确定要删除吗？");
-		if(conf){
-			$.ajax({
-				data : {"eid":eid},
-				dataType : "text",
-				type : "post",
-				url : "${pageContext.request.contextPath}/user/mailDelete.do",
-				success : function(rec) {
-					if (rec=="0") {
-						$(trID).remove();
-					}
-				}
-			});
-		}
-	}
-	</script>
 </body>
 </html>

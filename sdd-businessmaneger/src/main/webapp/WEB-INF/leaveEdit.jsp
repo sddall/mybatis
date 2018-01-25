@@ -35,7 +35,7 @@
 				href="loginOut.action">注销</a>
 		</div>
 	</div>
-<form id="sendMail" enctype="multipart/form-data" name="sendMail">
+<form id="leaveForm" name="leaveForm">
 	<div class="main">
 			<div class="global-width">
 				<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -99,26 +99,48 @@
 </html>
 
 				<div class="action">
-					<div class="t">收件箱</div>
+					<div class="t">申请休假</div>
 					<div class="pages">
 						<table width="90%" border="0" cellspacing="0" cellpadding="0"
-							id="receiveMail">
-						<tr>
-							<td>标题</td>
-							<td>内容</td>
-							<td>是否已读</td>
-							<td>时间</td>
-							<td>操作</td>
-						</tr>
-						<c:forEach items="${mails}" var="m">
-							<tr id="${m.eid}_tr">
-								<td><a href="mailInfo.action?eid=${m.eid}&receiver=${sessionUser.id}" target="_self">${m.title }</a></td>
-								<td>${m.contextArea }</td>
-								<td>${m.isread==0?'未读':'已读' }</td>
-								<td>${m.sendTime }</td>
-								<td><input type="button" value="删除" onclick="mailDelete(${m.eid})"/></td>
+							id="leaveEdit">
+							<tr>
+								<td align="right" width="30%">姓名:</td>
+								<td align="left"><input type="text"  name="membername" value="${sessionUser.username }"/></td>
 							</tr>
-						</c:forEach>	
+							<tr>
+								<td align="right" width="30%">开始时间:</td>
+								<td align="left"><input type="date" name="beginTime"/> </td>
+							</tr>
+							<tr>
+								<td align="right" width="30%">结束时间:</td>
+								<td align="left"><input type="date" name="endTime"/></td>
+							</tr>
+							<tr>
+								<td align="right" width="30%">请假天数:</td>
+								<td align="left"><input type="text" name="day"/></td>
+							</tr>
+							<tr>
+								<td align="right" width="30%" valign="top">请假原因</td>
+								<td align="left"><textarea name="reason" cols="36px" rows="5px"></textarea></td>
+							</tr>
+							<tr>
+								<td align="right" width="30%">审批人:</td>
+								<td align="left"><select name="admin">
+										<option value="please">请选择审批人</option>
+										<c:forEach items="${admins }" var="ad">
+											<option value="${ad.id }">${ad.username }</option>
+										</c:forEach>
+								</select></td>
+							</tr>
+							<tr>
+								<td align="right" width="30%"><input type="submit" value="提交申请"/></td>
+								<td align="left"><input type="button" value="返回" onclick="location.href='leave.action'"/></td>
+							</tr>
+							<tr>
+								<td align="center" colspan="2">
+									<input type="reset" style="display: none;" />
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -126,24 +148,41 @@
 		</div>		
 	</form>
 	<div class="copyright">Copyright &nbsp; &copy; &nbsp;</div>
-	<script type="text/javascript">
-	function mailDelete(eid){
-		var trID=document.getElementById(eid+"_tr");
-		var conf = confirm("确定要删除吗？");
-		if(conf){
-			$.ajax({
-				data : {"eid":eid},
-				dataType : "text",
-				type : "post",
-				url : "${pageContext.request.contextPath}/user/mailDelete.do",
-				success : function(rec) {
-					if (rec=="0") {
-						$(trID).remove();
-					}
-				}
-			});
-		}
-	}
-	</script>
 </body>
+<script type="text/javascript">
+
+//表单校验
+$(function() {
+	$("#leaveForm").validate({
+						rules : {
+							beginTime : "required",
+							endTime : "required",
+							day:"required"
+						},
+						messages : {
+							beginTime : "请选择开始时间",
+							endTime : "请选择结束时间",
+							day:"请正确填写天数"
+						},
+						submitHandler : function() {
+							//提交Ajax
+							 $.ajax({
+										data : $("#leaveForm").serialize(),
+										dataType : "text",
+										type : "post",
+										url : "${pageContext.request.contextPath}/user/leaveApply.do",
+										success : function(rec) {
+											if(rec=="0"){
+												alert("申请成功,请等待审批"),
+												$("input[type=reset]").trigger("click");
+											}else{
+												alert("申请失败,请重新申请");
+											}	
+										}
+									}); 
+						}
+					});
+})
+
+</script>
 </html>

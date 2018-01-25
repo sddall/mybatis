@@ -19,17 +19,13 @@ import com.sdd.service.IMailService;
 public class MailServiceImpl implements IMailService {
 	@Autowired
 	IMailMapper imm;
-	
-	@Autowired
-	Mail email;
-	
 	@Override
 	@Transactional
 	public int saveMail(Mail mail){
 		
 		if (!mail.getOtherFile().isEmpty()) {
-			String filePath = "D:/Service/" + mail.getOtherFile().getOriginalFilename();
-			mail.setFilePath(filePath);
+			String filePath = "D:/mybatis_repository/sdd-businessmaneger/src/main/webapp/file/" + mail.getOtherFile().getOriginalFilename();
+			mail.setFilePath("/file/"+mail.getOtherFile().getOriginalFilename());
 			File file = new File(filePath);
 			if (!file.exists()) {
 				file.mkdirs();
@@ -52,25 +48,30 @@ public class MailServiceImpl implements IMailService {
 	}
 	@Override
 	@Transactional
-	public List<Mail> findAllMail(Integer receiver) {
-		Integer isdelete=0;
-		email.setIsdelete(isdelete);
-		email.setReceiver(receiver);
-		return imm.findAllMail(email);
+	public List<Mail> findAllMail(Mail mail) {
+		return imm.findAllMail(mail);
 	}
 	@Override
+	@Transactional
 	public int updateReadInfo(Integer eid) {
 		return imm.updateReadInfo(eid);
 	}
 	@Override
+	@Transactional
 	public Mail findReadMail(Integer eid) {
 		
 		return imm.findReadMail(eid);
 	}
 	@Override
+	@Transactional
 	public int updateEmail(Mail mail) {
 		return imm.updateEmail(mail);
 		
+	}
+	@Override
+	public int deleteEmail(Mail mail) {
+		// TODO Auto-generated method stub
+		return imm.deleteEmail(mail);
 	}
 	
 

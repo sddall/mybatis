@@ -75,7 +75,7 @@
 				<a href="mailReceive.action?receiver=${sessionUser.id }" target="_self">收邮件</a>
 			</dd>
 			<dd>
-				<a href="mailGarage.action" target="_self">垃圾邮件</a>
+				<a href="mailGarage.action?receiver=${sessionUser.id }" target="_self">垃圾邮件</a>
 			</dd>
 		</dl>
 		<dl>
@@ -93,9 +93,11 @@
 				onclick="this.parentNode.className=this.parentNode.className=='open'?'':'open';">
 				权限管理</dt>
 			<dd>
-				<a href="userInfo!singleAccountData.action" target="_self">个人账户</a>
+				<a href="singleAccountData.action" target="_self">个人账户</a>
 			</dd>
-
+			<dd>
+				<a href="allAccountData.action" target="_self">管理账户</a>
+			</dd>
 		</dl>
 	</div>
 </body>

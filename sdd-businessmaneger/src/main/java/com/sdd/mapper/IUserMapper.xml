@@ -11,6 +11,9 @@
 			and id=#{id}
 		</where>
 	</select>
+	<select id="findAdmin" resultType="com.sdd.pojo.po.User">
+		select * from bm where isadmin=1
+	</select>
 	<select id="findAll" resultType="com.sdd.pojo.po.User" >
 		select * from bm
 	</select>

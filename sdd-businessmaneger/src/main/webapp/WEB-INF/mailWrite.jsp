@@ -72,7 +72,7 @@
 					target="_self">收邮件</a>
 			</dd>
 			<dd>
-				<a href="mailGarage.action" target="_self">垃圾邮件</a>
+				<a href="mailGarage.action?receiver=${sessionUser.id }" target="_self">垃圾邮件</a>
 			</dd>
 		</dl>
 		<dl>
@@ -90,7 +90,10 @@
 				onclick="this.parentNode.className=this.parentNode.className=='open'?'':'open';">
 				权限管理</dt>
 			<dd>
-				<a href="userInfo!singleAccountData.action" target="_self">个人账户</a>
+				<a href="singleAccountData.action" target="_self">个人账户</a>
+			</dd>
+			<dd>
+				<a href="allAccountData.action" target="_self">管理账户</a>
 			</dd>
 
 		</dl>
@@ -130,10 +133,10 @@
 							<tr>
 								<td align="center"><input type="submit" id="sendMail"
 									value="确认发送" /></td>
-								<td align="center">
+					
 								<td align="center" colspan="2"><input type="reset"
 									style="display: none;" /></td>
-								</td>
+				
 							</tr>
 						</table>
 					</div>

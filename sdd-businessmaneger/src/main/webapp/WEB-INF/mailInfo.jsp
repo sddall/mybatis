@@ -69,7 +69,7 @@
 				<a href="mailReceive.action?receiver=${sessionUser.id }" target="_self">收邮件</a>
 			</dd>
 			<dd>
-				<a href="mailGarage.action" target="_self">垃圾邮件</a>
+				<a href="mailGarage.action?receiver=${sessionUser.id }" target="_self">垃圾邮件</a>
 			</dd>
 		</dl>
 		<dl>
@@ -87,7 +87,10 @@
 				onclick="this.parentNode.className=this.parentNode.className=='open'?'':'open';">
 				权限管理</dt>
 			<dd>
-				<a href="userInfo!singleAccountData.action" target="_self">个人账户</a>
+				<a href="singleAccountData.action" target="_self">个人账户</a>
+			</dd>
+			<dd>
+				<a href="allAccountData.action" target="_self">管理账户</a>
 			</dd>
 
 		</dl>
@@ -118,7 +121,7 @@
 						</tr>
 						<tr>
 							<td align="right">附件:</td>
-							<td><input type="button" value="下载" onclick=""></input></td>
+							<td><a href="${pageContext.request.contextPath}${readMail.filePath}" download="阴阳师.jpg">下载附件</a></td>
 						</tr>
 						<tr>
 							<td colspan="2" align="center">

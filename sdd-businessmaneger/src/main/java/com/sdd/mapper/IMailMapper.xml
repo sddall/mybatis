@@ -94,4 +94,7 @@
 			eid=#{eid}
 		</where>
 	</update>
+	<delete id="deleteEmail" parameterType="int">
+		delete from mailservice where eid=#{eid}
+	</delete>
 </mapper>

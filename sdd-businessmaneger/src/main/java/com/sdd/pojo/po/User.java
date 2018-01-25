@@ -1,5 +1,8 @@
 package com.sdd.pojo.po;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class User {
 	private Integer id;
 	private String username;

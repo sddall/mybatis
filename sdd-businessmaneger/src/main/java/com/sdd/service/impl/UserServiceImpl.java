@@ -36,4 +36,9 @@ public class UserServiceImpl implements IUserService {
 		
 	}
 
+	@Override
+	public List<User> findAdmin() {
+		return ium.findAdmin();
+	}
+
 }

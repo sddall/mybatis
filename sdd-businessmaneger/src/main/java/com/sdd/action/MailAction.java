@@ -35,8 +35,9 @@ public class MailAction {
 	@RequestMapping(value="/mailReceive")
 	//@ResponseBody
 	public String mailReceive(Integer receiver, HttpSession session){
-		List<Mail> list=ims.findAllMail(receiver);
-		System.out.println(list);
+		mail.setReceiver(receiver);
+		mail.setIsdelete(0);
+		List<Mail> list=ims.findAllMail(mail);
 		if(list.size()==0){
 			return "noMail";
 		}else{
@@ -57,6 +58,36 @@ public class MailAction {
 		mail.setIsdelete(1);
 		mail.setEid(eid);
 		ims.updateEmail(mail);
+		return "0";
+		
+	}
+	@RequestMapping(value="mailGarage")
+	public String mailGarage(Integer receiver, HttpSession session){
+		mail.setIsdelete(1);
+		mail.setReceiver(receiver);
+		List<Mail> list=ims.findAllMail(mail);
+		if(list.size()==0){
+			return "noGarage";
+		}else{
+			session.setAttribute("garage", list);
+			return "mailGarage";
+		}
+		
+	}
+	@RequestMapping(value="mailRestore.do")
+	@ResponseBody
+	public String mailRestore(Integer eid){
+		mail.setIsdelete(0);
+		mail.setEid(eid);
+		ims.updateEmail(mail);
+		return "0";
+		
+	}
+	@RequestMapping(value="comDelete.do")
+	@ResponseBody
+	public String comDelete(Integer eid){
+		mail.setEid(eid);
+		ims.deleteEmail(mail);
 		return "0";
 		
 	}

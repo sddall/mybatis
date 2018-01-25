@@ -10,4 +10,5 @@ public interface IMailMapper {
 	int updateReadInfo(Integer eid);
 	Mail findReadMail(Integer eid);
 	int updateEmail(Mail mail);
+	int deleteEmail(Mail mail);
 }

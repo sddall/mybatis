@@ -8,4 +8,5 @@ public interface IUserMapper {
 	User findUserById(User user);
 	void saveUser(User user);
 	List<User> findAll();
+	List<User> findAdmin();
 }
